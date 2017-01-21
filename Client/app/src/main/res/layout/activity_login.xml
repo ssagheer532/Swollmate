@@ -35,4 +35,13 @@
         android:layout_marginBottom="23dp"
         android:id="@+id/send_message"
         android:visibility="gone"/>
+
+    <TextView
+        android:text="None"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/send_message"
+        android:layout_alignStart="@+id/login_status"
+        android:layout_marginTop="23dp"
+        android:id="@+id/ids" />
 </RelativeLayout>

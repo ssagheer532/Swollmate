@@ -3,7 +3,6 @@ package boilermake.swollmate;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -25,8 +24,8 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,14 +40,14 @@ public class LoginActivity extends AppCompatActivity implements
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private DatabaseReference test;
+    private DatabaseReference ids;
 
     private TextView mStatusTextView;
+    private TextView idsTextView;
 
     private Button send;
 
     private static final int RC_SIGN_IN = 9001;
-
-    String id;
 
     int counter = 0;
 
@@ -58,6 +57,8 @@ public class LoginActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        MainActivity.me = new User();
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -84,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    id = user.getUid();
+                    MainActivity.me.uID = user.getUid();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -102,6 +103,9 @@ public class LoginActivity extends AppCompatActivity implements
         });
 
         test = FirebaseDatabase.getInstance().getReference().child("test");
+        ids = FirebaseDatabase.getInstance().getReference().child("ids");
+
+        idsTextView = (TextView) findViewById(R.id.ids);
     }
 
     public void onClick(View v) {
@@ -145,6 +149,11 @@ public class LoginActivity extends AppCompatActivity implements
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             if (acct != null) {
+                User me = MainActivity.me;
+                me.firstName = acct.getGivenName();
+                me.lastName = acct.getFamilyName();
+                me.email = acct.getEmail();
+
                 mStatusTextView.setText(acct.getDisplayName());
                 firebaseAuthWithGoogle(acct);
             }
@@ -184,6 +193,14 @@ public class LoginActivity extends AppCompatActivity implements
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful());
 
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef = database.getReference();
+
+                        MainActivity.ids.add(MainActivity.me.uID);
+
+                        myRef.child("users").child(MainActivity.me.uID).setValue(MainActivity.me);
+                        myRef.child("ids").setValue(MainActivity.ids);
+
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
@@ -217,6 +234,43 @@ public class LoginActivity extends AppCompatActivity implements
             }
         };
         test.addValueEventListener(postListener);
+
+        ChildEventListener childListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                long num = dataSnapshot.getChildrenCount();
+                Log.d(TAG, "onChildAdded: " + dataSnapshot);
+                String example = dataSnapshot.getValue().toString();
+                //String example = dataSnapshot.child("0").getValue().toString();
+                for (int i = 1; i < num; i++) {
+                    example = example + "\n" + dataSnapshot.child(Long.toString(i)).getValue();
+                }
+
+                idsTextView.setText(example);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        ids.addChildEventListener(childListener);
         mAuth.addAuthStateListener(mAuthListener);
     }
 
@@ -233,7 +287,7 @@ public class LoginActivity extends AppCompatActivity implements
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
 
-        myRef.child("users").child(id).child("messages").child(Integer.toString(counter)).setValue("OMG THIS WORKS!");
+        myRef.child("users").child(MainActivity.me.uID).child("messages").child(Integer.toString(counter)).setValue("OMG THIS WORKS!");
         counter++;
     }
 }
