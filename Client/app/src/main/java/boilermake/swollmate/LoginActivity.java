@@ -32,26 +32,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import static boilermake.swollmate.MainActivity.mAuth;
+import static boilermake.swollmate.MainActivity.mAuthListener;
+
 public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
+    private static final int RC_SIGN_IN = 9001;
+    int counter = 0;
+    String TAG = "LoginActivity";
     private GoogleApiClient mGoogleApiClient;
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-
     private DatabaseReference test;
     private DatabaseReference ids;
-
     private TextView mStatusTextView;
     private TextView idsTextView;
-
     private Button send;
-
-    private static final int RC_SIGN_IN = 9001;
-
-    int counter = 0;
-
-    String TAG = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
