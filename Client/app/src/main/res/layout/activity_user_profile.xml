@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="boilermake.swollmate.UserProfileActivity">
+    tools:context="boilermake.swollmate.UserProfileActivity"
+    android:background="@android:color/background_light">
 
     <TextView
         android:text="Name"
@@ -54,16 +55,6 @@
         android:layout_alignStart="@+id/SkillLevel"
         android:id="@+id/Gender"
         android:layout_below="@+id/Beginner" />
-
-    <TextView
-        android:text="Bio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="49dp"
-        android:id="@+id/Bio"
-        android:layout_below="@+id/Gender"
-        android:layout_alignEnd="@+id/SkillLevel"
-        android:layout_alignStart="@+id/Gender" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -140,32 +131,54 @@
         android:layout_alignBottom="@+id/Intermediate"
         android:layout_toEndOf="@+id/Intermediate" />
 
-    <CheckBox
-        android:text="Female"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBoxFemale"
-        android:layout_alignBaseline="@+id/checkBoxMale"
-        android:layout_alignBottom="@+id/checkBoxMale"
-        android:layout_toEndOf="@+id/checkBoxMale"
-        android:layout_marginStart="11dp" />
 
-    <CheckBox
-        android:text="Male"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBoxMale"
+    <RadioGroup
+        android:layout_width="fill_parent"
+        android:layout_height="90dp"
+        android:weightSum="1"
+        android:id="@+id/radioGroup"
         android:layout_below="@+id/Gender"
-        android:layout_alignStart="@+id/Gender" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/Gender">
 
-    <CheckBox
-        android:text="Other"
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:text="Male"
+            android:id="@+id/radioButton"
+            android:checked="false"
+            android:layout_alignBaseline="@+id/Age_Int_Only"
+            android:layout_alignBottom="@+id/Age_Int_Only"
+            android:layout_alignEnd="@+id/Gain_Muscle"
+            android:textSize="14sp" />
+
+        <RadioButton
+            android:layout_height="22dp"
+            android:text="Female"
+            android:id="@+id/radioButton2"
+            android:checked="false"
+            android:textSize="14sp"
+            android:layout_alignBaseline="@+id/Age_Int_Only"
+            android:layout_alignBottom="@+id/Age_Int_Only"
+            android:layout_alignEnd="@+id/Expert"
+            android:layout_width="wrap_content" />
+
+        <RadioButton
+            android:text="Other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioButtonOther"
+            android:textSize="14sp" />
+    </RadioGroup>
+
+    <TextView
+        android:text="Bio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBoxOther"
-        android:layout_alignBaseline="@+id/checkBoxFemale"
-        android:layout_alignBottom="@+id/checkBoxFemale"
-        android:layout_toEndOf="@+id/checkBoxFemale" />
+        android:id="@+id/Bio"
+        android:layout_alignStart="@+id/radioGroup"
+        android:layout_alignEnd="@+id/SkillLevel"
+        android:layout_below="@+id/radioGroup" />
 
     <EditText
         android:layout_width="wrap_content"
