@@ -238,13 +238,8 @@ public class LoginActivity extends AppCompatActivity implements
         ChildEventListener childListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                long num = dataSnapshot.getChildrenCount();
                 Log.d(TAG, "onChildAdded: " + dataSnapshot);
-                String example = dataSnapshot.getValue().toString();
-                //String example = dataSnapshot.child("0").getValue().toString();
-                for (int i = 1; i < num; i++) {
-                    example = example + "\n" + dataSnapshot.child(Long.toString(i)).getValue();
-                }
+                String example = (String) dataSnapshot.getValue();
 
                 idsTextView.setText(example);
             }
