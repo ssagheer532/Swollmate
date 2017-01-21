@@ -50,6 +50,8 @@ public class LoginActivity extends AppCompatActivity implements
 
     String id;
 
+    int counter = 0;
+
     String TAG = "LoginActivity";
 
     @Override
@@ -231,6 +233,7 @@ public class LoginActivity extends AppCompatActivity implements
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
 
-        myRef.child("users").child(id).child("messages").setValue("OMG THIS WORKS!");
+        myRef.child("users").child(id).child("messages").child(Integer.toString(counter)).setValue("OMG THIS WORKS!");
+        counter++;
     }
 }
