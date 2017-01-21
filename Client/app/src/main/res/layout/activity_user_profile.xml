@@ -10,4 +10,178 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="boilermake.swollmate.UserProfileActivity">
 
+    <TextView
+        android:text="Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Name"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="21dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Age: "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:id="@+id/Age"
+        android:layout_below="@+id/Name"
+        android:layout_alignStart="@+id/Name" />
+
+    <TextView
+        android:text="Goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Age"
+        android:layout_alignStart="@+id/Age"
+        android:layout_marginTop="47dp"
+        android:id="@+id/Goal" />
+
+    <TextView
+        android:text="SkillLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Goal"
+        android:layout_alignStart="@+id/Goal"
+        android:layout_marginTop="64dp"
+        android:id="@+id/SkillLevel" />
+
+    <TextView
+        android:text="Gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/SkillLevel"
+        android:id="@+id/Gender"
+        android:layout_below="@+id/Beginner" />
+
+    <TextView
+        android:text="Bio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="49dp"
+        android:id="@+id/Bio"
+        android:layout_below="@+id/Gender"
+        android:layout_alignEnd="@+id/SkillLevel"
+        android:layout_alignStart="@+id/Gender" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:layout_below="@+id/Age"
+        android:layout_alignStart="@+id/Goal"
+        android:id="@+id/Age_Int_Only" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_below="@+id/Name"
+        android:layout_alignStart="@+id/Name"
+        android:id="@+id/Name_Of_Person" />
+
+    <CheckBox
+        android:text="Gain Muscle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Gain_Muscle"
+        android:layout_below="@+id/Goal"
+        android:layout_alignStart="@+id/Goal" />
+
+    <CheckBox
+        android:text="Leisure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/Gain_Muscle"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/Leisure" />
+
+    <CheckBox
+        android:text="Loose Weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Gain_Muscle"
+        android:layout_alignStart="@+id/SkillLevel"
+        android:id="@+id/Loose_Weight" />
+
+    <CheckBox
+        android:text="Sports"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/Loose_Weight"
+        android:layout_alignStart="@+id/Leisure"
+        android:id="@+id/Sports" />
+
+    <CheckBox
+        android:text="Beginner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/SkillLevel"
+        android:layout_alignStart="@+id/SkillLevel"
+        android:id="@+id/Beginner" />
+
+    <CheckBox
+        android:text="Intermediate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/Beginner"
+        android:layout_toEndOf="@+id/Beginner"
+        android:id="@+id/Intermediate" />
+
+    <CheckBox
+        android:text="Expert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Expert"
+        android:layout_alignBaseline="@+id/Intermediate"
+        android:layout_alignBottom="@+id/Intermediate"
+        android:layout_toEndOf="@+id/Intermediate" />
+
+    <CheckBox
+        android:text="Female"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBoxFemale"
+        android:layout_alignBaseline="@+id/checkBoxMale"
+        android:layout_alignBottom="@+id/checkBoxMale"
+        android:layout_toEndOf="@+id/checkBoxMale"
+        android:layout_marginStart="11dp" />
+
+    <CheckBox
+        android:text="Male"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBoxMale"
+        android:layout_below="@+id/Gender"
+        android:layout_alignStart="@+id/Gender" />
+
+    <CheckBox
+        android:text="Other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBoxOther"
+        android:layout_alignBaseline="@+id/checkBoxFemale"
+        android:layout_alignBottom="@+id/checkBoxFemale"
+        android:layout_toEndOf="@+id/checkBoxFemale" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/BioForPerson"
+        android:singleLine="false"
+        android:inputType="textMultiLine|textLongMessage"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:maxLines = "3"
+        android:maxLength="90"
+        android:hint="Enter Bio"
+        android:selectAllOnFocus="false"
+        android:layout_below="@+id/Bio"
+        android:layout_alignStart="@+id/Bio"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

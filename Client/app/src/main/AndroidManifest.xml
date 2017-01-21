@@ -16,9 +16,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".UserProfileActivity" />
+        <activity android:name=".UserProfileActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".DiscoverActivity" />
+
         <activity android:name=".ChatActivity"></activity>
+
     </application>
 
 </manifest>
