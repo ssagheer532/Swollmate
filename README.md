@@ -1,1 +1,1 @@
-# LiftPals
+# Swollmate
