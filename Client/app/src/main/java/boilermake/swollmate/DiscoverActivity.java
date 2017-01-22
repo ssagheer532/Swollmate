@@ -81,6 +81,13 @@ public class DiscoverActivity extends AppCompatActivity {
                         MainActivity.matched.clear();
                         MainActivity.matched.addAll(mtemp);
                         writeToFirebase("matched", MainActivity.matched);
+
+                        MainActivity.pending.remove(opp);
+                        Set<String> ptemp = new HashSet<String>();
+                        ptemp.addAll(MainActivity.pending);
+                        MainActivity.pending.clear();
+                        MainActivity.pending.addAll(ptemp);
+                        writeToFirebase("pending", MainActivity.pending);
                     } else {
                         MainActivity.pending.add(string);
                         Set<String> ptemp = new HashSet<String>();
@@ -140,6 +147,9 @@ public class DiscoverActivity extends AppCompatActivity {
     }
 
     public void readFromFirebase(String uID) {
+        if (uID.equals(me.uID)) {
+            return;
+        }
         usersDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(uID);
 
         ChildEventListener childListener = new ChildEventListener() {
