@@ -252,7 +252,7 @@ public class LoginActivity extends AppCompatActivity implements
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Log.d(TAG, "onChildAdded: " + dataSnapshot);
-                String example = (String) dataSnapshot.getValue();
+                String example = (String) dataSnapshot.getValue().toString();
 
                 //idsTextView.setText(example);
                 if (ids.contains(example) && example.equals(me.uID)) {

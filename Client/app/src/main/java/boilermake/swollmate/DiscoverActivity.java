@@ -20,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import static boilermake.swollmate.MainActivity.ids;
 import static boilermake.swollmate.MainActivity.me;
@@ -53,23 +55,46 @@ public class DiscoverActivity extends AppCompatActivity {
         bio = (TextView) findViewById(R.id.UserBio);
 
         if (index < ids.size()) {
-            readFromFirebase(ids.get(index));
+            if (ids.get(index).equals(me.uID)) {
+                index++;
+            }
+            if (index < ids.size()) {
+                readFromFirebase(ids.get(index));
+            } else {
+                no_users();
+            }
         } else {
             no_users();
         }
-
 
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (index < ids.size()) {
-                    me.like.add(ids.get(index));
-                    if (me.pending.contains(ids.get(index))) {
-                        me.pending.remove(ids.get(index));
-                        me.like.remove(ids.get(index));
-                        me.matched.add(ids.get(index));
+                    String string = me.uID + " " + ids.get(index);
+                    String opp = ids.get(index) + " " + me.uID;
+
+                    if (MainActivity.pending.contains(opp) || MainActivity.pending.contains(string)) {
+                        MainActivity.matched.add(string);
+                        Set<String> mtemp = new HashSet<String>();
+                        mtemp.addAll(MainActivity.matched);
+                        MainActivity.matched.clear();
+                        MainActivity.matched.addAll(mtemp);
+                        writeToFirebase("matched", MainActivity.matched);
+                    } else {
+                        MainActivity.pending.add(string);
+                        Set<String> ptemp = new HashSet<String>();
+                        ptemp.addAll(MainActivity.pending);
+                        MainActivity.pending.clear();
+                        MainActivity.pending.addAll(ptemp);
+                        writeToFirebase("pending", MainActivity.pending);
                     }
-                    readFromFirebase(ids.get(index));
+                    index++;
+                    if (index < ids.size()) {
+                        readFromFirebase(ids.get(index));
+                    } else {
+                        no_users();
+                    }
                 } else
                     no_users();
             }
@@ -79,12 +104,24 @@ public class DiscoverActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (index < ids.size()) {
-                    me.dislike.add(ids.get(index));
-                    if (me.pending.contains(ids.get(index))) {
-                        int temp = me.pending.indexOf(ids.get(index));
-                        me.pending.remove(temp);
+                    String string = me.uID + " " + ids.get(index);
+                    String opp = ids.get(index) + " " + me.uID;
+
+                    if (MainActivity.pending.contains(opp) || MainActivity.pending.contains(string)) {
+                        MainActivity.pending.remove(string);
+                        Set<String> ptemp = new HashSet<String>();
+                        ptemp.addAll(MainActivity.pending);
+                        MainActivity.pending.clear();
+                        MainActivity.pending.addAll(ptemp);
+                        writeToFirebase("pending", MainActivity.pending);
                     }
-                    readFromFirebase(ids.get(index));
+
+                    index++;
+                    if (index < ids.size()) {
+                        readFromFirebase(ids.get(index));
+                    } else {
+                        no_users();
+                    }
                 } else
                     no_users();
             }
@@ -103,7 +140,6 @@ public class DiscoverActivity extends AppCompatActivity {
     }
 
     public void readFromFirebase(String uID) {
-        index++;
         usersDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(uID);
 
         ChildEventListener childListener = new ChildEventListener() {
@@ -181,16 +217,88 @@ public class DiscoverActivity extends AppCompatActivity {
         }
     }
 
-    public void writeToFirebase(String child, String value, String uID) {
+    public void writeToFirebase(String child, ArrayList<String> list) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
 
-        myRef.child("users").child(uID).child(child).setValue(value);
+        myRef.child(child).setValue(list);
     }
 
     @Override
     public void onStart() {
         super.onStart();
+
+        DatabaseReference pending = FirebaseDatabase.getInstance().getReference().child("pending");
+        ChildEventListener pListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String key = (String) dataSnapshot.getKey();
+                String value = (String) dataSnapshot.getValue().toString();
+
+                MainActivity.pending.add(value);
+
+                Log.d("Key: ", key);
+                Log.d("Value: ", value);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        pending.addChildEventListener(pListener);
+
+        DatabaseReference matched = FirebaseDatabase.getInstance().getReference().child("matched");
+        ChildEventListener mListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String key = (String) dataSnapshot.getKey();
+                String value = (String) dataSnapshot.getValue().toString();
+
+                MainActivity.matched.add(value);
+
+                Log.d("Key: ", key);
+                Log.d("Value: ", value);
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        matched.addChildEventListener(mListener);
+
 
         //TODO For chat
         /*

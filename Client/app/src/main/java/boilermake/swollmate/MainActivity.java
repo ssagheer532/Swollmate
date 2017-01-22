@@ -15,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<String> ids = new ArrayList<>();
     public static User me;
 
+    public static ArrayList<String> pending = new ArrayList<>();
+    public static ArrayList<String> matched = new ArrayList<>();
+
     public static FirebaseAuth mAuth;
     public static FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -40,10 +43,10 @@ class User {
     public String gender;
     public String bio;
     public String skill;
-    public ArrayList <String> like;
-    public ArrayList <String> dislike;
-    public ArrayList <String> pending;
-    public ArrayList <String> matched;
+    public String like;
+    public String dislike;
+    public String pending;
+    public String matched;
 
     public User() {
     }
