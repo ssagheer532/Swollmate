@@ -226,10 +226,15 @@ public class DiscoverActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, UserProfileActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.chat:
+                Intent intent2 = new Intent(this, ChatListActivity.class);
+                startActivity(intent2);
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
+
         }
     }
 
@@ -439,4 +444,5 @@ public class DiscoverActivity extends AppCompatActivity {
         a++;
         */
     }
+
 }
