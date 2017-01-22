@@ -196,6 +196,9 @@ public class LoginActivity extends AppCompatActivity implements
                         if (!MainActivity.ids.contains(me.uID)) {
                             MainActivity.ids.add(me.uID);
                         }
+                        if (ids.contains(me.uID)) {
+                            newUser = false;
+                        }
 
                         Thread.yield();
                         if (newUser) {
@@ -254,8 +257,11 @@ public class LoginActivity extends AppCompatActivity implements
                 Log.d(TAG, "onChildAdded: " + dataSnapshot);
                 String example = (String) dataSnapshot.getValue().toString();
 
+                if (ids.contains(me.uID)) {
+                    newUser = false;
+                }
                 //idsTextView.setText(example);
-                if (ids.contains(example) && example.equals(me.uID)) {
+                if (ids.contains(me.uID) && example.equals(me.uID)) {
                     newUser = false;
                 }
                 else    if (!ids.contains(example)) {

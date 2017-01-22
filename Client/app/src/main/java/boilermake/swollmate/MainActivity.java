@@ -17,15 +17,17 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<User> users = new ArrayList<>();
     public static ArrayList<String> ids = new ArrayList<>();
     public static User me;
-    public static ArrayList<Button> buttons = new ArrayList<>();
+    public static ArrayList<Button> chats = new ArrayList<>();
 
     public static ArrayList<String> pending = new ArrayList<>();
     public static ArrayList<String> matched = new ArrayList<>();
 
-    public static ArrayList<TextView> chat = new ArrayList<>();
+    public static ArrayList<TextView> messages = new ArrayList<>();
 
     public static FirebaseAuth mAuth;
     public static FirebaseAuth.AuthStateListener mAuthListener;
+
+    public static String currentChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,31 +8,75 @@
     android:fitsSystemWindows="true"
     tools:context="boilermake.swollmate.ChatActivity">
 
-    <include layout="@layout/content_chat" />
-
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="55pt"
-        android:fitsSystemWindows="true"
+        android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_chat"
+        android:layout_width="92dp"
+        android:layout_height="201dp" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:text="Send"
+        android:id="@+id/sendButton"
+        android:layout_alignTop="@+id/editBoardPost"
+        android:layout_alignEnd="@+id/editBoardPost"
+        android:layout_alignBottom="@+id/editBoardPost"
+        android:layout_height="41dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="10dp"
+        android:elevation="5dp" />
+
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="75dp">
+        android:layout_height="454dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="130dp"
+        android:background="@color/wallet_bright_foreground_holo_dark"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingLeft="10dp"
+        android:elevation="5dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
         <LinearLayout
-            android:id="@+id/linear"
+            android:id="@+id/boardLayout2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </ScrollView>
+
+    <EditText
+        android:layout_width="236dp"
+        android:layout_height="69dp"
+        android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
+        android:ems="10"
+        android:paddingEnd="55dp"
+        android:paddingStart="10dp"
+        android:background="@android:color/background_light"
+        android:hint="Write a new post"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:id="@+id/editBoardPost"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="90dp"
+        android:elevation="5dp" />
 
 
 </android.support.design.widget.CoordinatorLayout>
