@@ -200,6 +200,7 @@ public class LoginActivity extends AppCompatActivity implements
 
                         Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
                         startActivity(intent);
+                        sendIDs();
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
@@ -284,12 +285,12 @@ public class LoginActivity extends AppCompatActivity implements
         }
     }
 
-    void sendMessage() {
+    void sendIDs() {
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
 
-        myRef.child("users").child(me.uID).child("messages").child(Integer.toString(counter)).setValue("OMG THIS WORKS!");
+        myRef.child("ids").setValue(MainActivity.ids);
         counter++;
     }
 }
