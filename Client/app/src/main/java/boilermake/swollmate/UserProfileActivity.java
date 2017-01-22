@@ -2,11 +2,8 @@ package boilermake.swollmate;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,7 +12,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.formats.NativeAd;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,8 +48,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
         name = (TextView) findViewById(R.id.Name_Of_Person);
         setTitle("Profile");
-        readFromFirebase();
-       // buttonNext = (ImageButton) findViewById(R.id.buttonNext);
+        // readFromFirebase();
+        // buttonNext = (ImageButton) findViewById(R.id.buttonNext);
 
         gainMuscleGoal = (CheckBox) findViewById(R.id.Gain_Muscle);
         leisureGoal = (CheckBox) findViewById(R.id.Leisure);
@@ -203,6 +199,51 @@ public class UserProfileActivity extends AppCompatActivity {
 
                 if (key.equals("picURL")) {
                     Picasso.with(UserProfileActivity.this).load(value).into((ImageView) findViewById(R.id.my_pic));
+                }
+
+                if (key.equals("age")) {
+                    age.setText(value);
+                }
+                if (key.equals("bio")) {
+                    bio.setText(value);
+                }
+                if (key.equals("gender")) {
+                    if (value.equals("male")) {
+                        male.isPressed();
+                    }
+                    if (value.equals("female")) {
+                        female.isPressed();
+                    }
+                    if (value.equals("other")) {
+                        other.isPressed();
+                    }
+                }
+
+                if (key.equals("skill")) {
+                    if (value.equals("Intermediate")) {
+                        intermediateLevel.isChecked();
+                    }
+                    if (value.equals("Beginner")) {
+                        beginnerLevel.isChecked();
+                    }
+                    if (value.equals("Expert")) {
+                        expertLevel.isChecked();
+                    }
+                }
+
+                if (key.equals("goals")) {
+                    if (value.equals("Leisure")) {
+                        leisureGoal.isChecked();
+                    }
+                    if (value.equals("Sports")) {
+                        sportsGoal.isChecked();
+                    }
+                    if (value.equals("Gain Muscle")) {
+                        gainMuscleGoal.isChecked();
+                    }
+                    if (value.equals("Loose Weight")) {
+                        looseWeightGoal.isChecked();
+                    }
                 }
             }
 
