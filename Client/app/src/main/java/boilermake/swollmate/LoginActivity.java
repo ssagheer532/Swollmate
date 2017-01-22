@@ -30,8 +30,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
+import static boilermake.swollmate.MainActivity.ids;
 import static boilermake.swollmate.MainActivity.mAuth;
 import static boilermake.swollmate.MainActivity.mAuthListener;
 
@@ -42,8 +42,8 @@ public class LoginActivity extends AppCompatActivity implements
     int counter = 0;
     String TAG = "LoginActivity";
     private GoogleApiClient mGoogleApiClient;
-    private DatabaseReference test;
-    private DatabaseReference ids;
+    //private DatabaseReference test;
+    private DatabaseReference idsRef;
     private TextView mStatusTextView;
     private TextView idsTextView;
     private Button send;
@@ -97,8 +97,8 @@ public class LoginActivity extends AppCompatActivity implements
             }
         });
 
-        test = FirebaseDatabase.getInstance().getReference().child("test");
-        ids = FirebaseDatabase.getInstance().getReference().child("ids");
+        //test = FirebaseDatabase.getInstance().getReference().child("test");
+        idsRef = FirebaseDatabase.getInstance().getReference().child("idsRef");
 
         idsTextView = (TextView) findViewById(R.id.ids);
     }
@@ -194,9 +194,11 @@ public class LoginActivity extends AppCompatActivity implements
                         MainActivity.ids.add(MainActivity.me.uID);
 
                         myRef.child("users").child(MainActivity.me.uID).setValue(MainActivity.me);
-                        myRef.child("ids").setValue(MainActivity.ids);
-                       // Intent intent = new Intent(LoginActivity.this, DiscoverActivity.class);
+                        myRef.child("idsRef").setValue(MainActivity.ids);
+
+                        //Intent intent = new Intent(LoginActivity.this, DiscoverActivity.class);
                         //startActivity(intent);
+
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
@@ -213,6 +215,9 @@ public class LoginActivity extends AppCompatActivity implements
     @Override
     public void onStart() {
         super.onStart();
+
+        //TODO For chat
+        /*
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -230,6 +235,7 @@ public class LoginActivity extends AppCompatActivity implements
             }
         };
         test.addValueEventListener(postListener);
+        */
 
         ChildEventListener childListener = new ChildEventListener() {
             @Override
@@ -237,7 +243,10 @@ public class LoginActivity extends AppCompatActivity implements
                 Log.d(TAG, "onChildAdded: " + dataSnapshot);
                 String example = (String) dataSnapshot.getValue();
 
-                idsTextView.setText(example);
+                //idsTextView.setText(example);
+                if (!ids.contains(example)) {
+                    ids.add(example);
+                }
             }
 
             @Override
@@ -261,7 +270,7 @@ public class LoginActivity extends AppCompatActivity implements
             }
         };
 
-        ids.addChildEventListener(childListener);
+        idsRef.addChildEventListener(childListener);
         mAuth.addAuthStateListener(mAuthListener);
     }
 
