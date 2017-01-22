@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_user_profile"
     android:layout_width="match_parent"
@@ -10,16 +11,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="boilermake.swollmate.UserProfileActivity"
     android:background="@android:color/background_light">
-
-    <TextView
-        android:text="Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/Name"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="21dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
 
     <TextView
         android:text="Age: "
@@ -145,7 +136,7 @@
             android:layout_width="wrap_content"
             android:layout_height="22dp"
             android:text="Male"
-            android:id="@+id/radioButton"
+            android:id="@+id/male"
             android:checked="false"
             android:layout_alignBaseline="@+id/Age_Int_Only"
             android:layout_alignBottom="@+id/Age_Int_Only"
@@ -155,7 +146,7 @@
         <RadioButton
             android:layout_height="22dp"
             android:text="Female"
-            android:id="@+id/radioButton2"
+            android:id="@+id/female"
             android:checked="false"
             android:textSize="14sp"
             android:layout_alignBaseline="@+id/Age_Int_Only"
@@ -167,7 +158,7 @@
             android:text="Other"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/radioButtonOther"
+            android:id="@+id/other"
             android:textSize="14sp" />
     </RadioGroup>
 
@@ -201,8 +192,27 @@
         android:text="Next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/Name_Of_Person"
+        android:id="@+id/buttonNext"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Name"
+        android:layout_marginStart="25dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:layout_alignTop="@+id/Age"
         android:layout_alignParentEnd="true"
-        android:id="@+id/buttonNext" />
+        android:id="@+id/my_pic"
+        android:layout_above="@+id/Leisure"
+        android:layout_alignStart="@+id/buttonNext" />
 
 </RelativeLayout>
