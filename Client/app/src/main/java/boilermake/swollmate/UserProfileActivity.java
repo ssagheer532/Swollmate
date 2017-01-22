@@ -209,40 +209,40 @@ public class UserProfileActivity extends AppCompatActivity {
                 }
                 if (key.equals("gender")) {
                     if (value.equals("male")) {
-                        male.isPressed();
+                        male.setPressed(true);
                     }
                     if (value.equals("female")) {
-                        female.isPressed();
+                        female.setPressed(true);
                     }
                     if (value.equals("other")) {
-                        other.isPressed();
+                        other.setPressed(true);
                     }
                 }
 
                 if (key.equals("skill")) {
                     if (value.equals("Intermediate")) {
-                        intermediateLevel.isChecked();
+                        intermediateLevel.setChecked(true);
                     }
                     if (value.equals("Beginner")) {
-                        beginnerLevel.isChecked();
+                        beginnerLevel.setChecked(true);
                     }
                     if (value.equals("Expert")) {
-                        expertLevel.isChecked();
+                        expertLevel.setChecked(true);
                     }
                 }
 
                 if (key.equals("goals")) {
                     if (value.equals("Leisure")) {
-                        leisureGoal.isChecked();
+                        leisureGoal.setChecked(true);
                     }
                     if (value.equals("Sports")) {
-                        sportsGoal.isChecked();
+                        sportsGoal.setChecked(true);
                     }
                     if (value.equals("Gain Muscle")) {
-                        gainMuscleGoal.isChecked();
+                        gainMuscleGoal.setChecked(true);
                     }
                     if (value.equals("Loose Weight")) {
-                        looseWeightGoal.isChecked();
+                        looseWeightGoal.setChecked(true);
                     }
                 }
             }
