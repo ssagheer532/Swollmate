@@ -11,12 +11,12 @@ public class UserProfileActivity extends AppCompatActivity {
 
     CheckBox gainMuscleGoal, leisureGoal, looseWeightGoal, sportsGoal;
     CheckBox beginnerLevel, expertLevel, intermediateLevel;
-    private RadioGroup radioSexGroup;
-    private RadioButton radioSexButton;
+    private RadioGroup radioGroup;
+    private RadioButton gender;
 
 
     @Override
-    /*protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
@@ -29,17 +29,17 @@ public class UserProfileActivity extends AppCompatActivity {
         expertLevel = (CheckBox) findViewById(R.id.Expert);
         intermediateLevel = (CheckBox) findViewById(R.id.Intermediate);
 
-
-    }*/
-
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
-        radioSexGroup = (RadioGroup) findViewById(R.id.radioGroup);
-
-        int selectedId = radioSexGroup.getCheckedRadioButtonId();
-        radioSexButton = (RadioButton) findViewById(selectedId);
-
+        radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+        int selectedId = radioGroup.getCheckedRadioButtonId();
+        if (selectedId == 0) {
+            gender = (RadioButton) findViewById(R.id.male);
+        }
+        else if (selectedId == 1) {
+            gender = (RadioButton) findViewById(R.id.female);
+        }
+        else if (selectedId == 2) {
+            gender = (RadioButton) findViewById(R.id.other);
+        }
         setTitle("Make your profile!");
        // getActionBar().setIcon(R.drawable.my_icon);
     }

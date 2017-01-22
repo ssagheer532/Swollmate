@@ -1,6 +1,7 @@
 package boilermake.swollmate;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -27,27 +28,22 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 
+@SuppressWarnings("WeakerAccess")
 class User {
     public String uID;
     public String email;
     public String firstName;
     public String lastName;
-    int age;
-    String goal[];
-    String gender;
-    String bio;
+    public Uri pic;
+    public int age;
+    public String goal[];
+    public String gender;
+    public String bio;
+    public ArrayList <String> like;
+    public ArrayList <String> dislike;
+    public ArrayList <String> pending;
+    public ArrayList <String> matched;
 
     public User() {
-    }
-
-    public User(String uID, String email, String firstName, String lastName, int age, String[] goal, String gender, String bio) {
-        this.uID = uID;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-        this.goal = goal;
-        this.gender = gender;
-        this.bio = bio;
     }
 }
