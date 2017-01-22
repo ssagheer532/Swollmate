@@ -257,7 +257,7 @@ public class LoginActivity extends AppCompatActivity implements
                 if (ids.contains(example) && example.equals(me.uID)) {
                     newUser = false;
                 }
-                if (!ids.contains(example)) {
+                else    if (!ids.contains(example)) {
                     ids.add(example);
                 }
             }

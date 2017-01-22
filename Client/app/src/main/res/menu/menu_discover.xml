@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="boilermake.swollmate.DiscoverActivity">
+
+    <!--<item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="Menu"
+        app:showAsAction="always" />
+    -->
+    <item
+        android:id="@+id/edit_profile"
+        android:title="Edit Profile"/>
+    <item
+        android:id="@+id/chat"
+        android:title="Chat"/>
+</menu>
