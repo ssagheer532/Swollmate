@@ -203,7 +203,7 @@
         app:srcCompat="@drawable/arrow3"
         android:scaleType="fitCenter"
         android:background="@null"
-        android:id="@+id/imageButton3"
+        android:id="@+id/buttonNext"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/BioForPerson" />
