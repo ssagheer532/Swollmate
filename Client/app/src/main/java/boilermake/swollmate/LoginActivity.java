@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity implements
     private static final int RC_SIGN_IN = 9001;
     int counter = 0;
     String TAG = "LoginActivity";
+    boolean newUser = true;
     private GoogleApiClient mGoogleApiClient;
     //private DatabaseReference test;
     private DatabaseReference idsRef;
@@ -150,13 +151,13 @@ public class LoginActivity extends AppCompatActivity implements
                 me.email = acct.getEmail();
                 me.picURL = String.valueOf(acct.getPhotoUrl());
 
-               // mStatusTextView.setText(acct.getDisplayName());
+                // mStatusTextView.setText(acct.getDisplayName());
                 firebaseAuthWithGoogle(acct);
             }
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
-           // mStatusTextView.setText("Signed out");
+            // mStatusTextView.setText("Signed out");
             updateUI(false);
         }
     }
@@ -164,7 +165,7 @@ public class LoginActivity extends AppCompatActivity implements
     private void updateUI(boolean signedIn) {
         if (signedIn) {
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-          //  send.setVisibility(View.VISIBLE);
+            //  send.setVisibility(View.VISIBLE);
             idsTextView.setText("Welcome " + MainActivity.me.firstName);
             //findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         } else {
@@ -177,7 +178,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-       // mStatusTextView.setText("Signed failed");
+        // mStatusTextView.setText("Signed failed");
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -193,13 +194,19 @@ public class LoginActivity extends AppCompatActivity implements
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference();
 
-                        MainActivity.ids.add(me.uID);
+                        if (!MainActivity.ids.contains(me.uID)) {
+                            MainActivity.ids.add(me.uID);
+                        }
 
-                        myRef.child("users").child(me.uID).setValue(me);
-                        myRef.child("idsRef").setValue(MainActivity.ids);
-
-                        Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
-                        startActivity(intent);
+                        Thread.yield();
+                        if (newUser) {
+                            myRef.child("users").child(me.uID).setValue(me);
+                            Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(LoginActivity.this, DiscoverActivity.class);
+                            startActivity(intent);
+                        }
                         sendIDs();
 
                         // If sign in fails, display a message to the user. If sign in succeeds
@@ -247,6 +254,9 @@ public class LoginActivity extends AppCompatActivity implements
                 String example = (String) dataSnapshot.getValue();
 
                 //idsTextView.setText(example);
+                if (ids.contains(example) && example.equals(me.uID)) {
+                    newUser = false;
+                }
                 if (!ids.contains(example)) {
                     ids.add(example);
                 }
