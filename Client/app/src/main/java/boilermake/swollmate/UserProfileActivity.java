@@ -208,13 +208,13 @@ public class UserProfileActivity extends AppCompatActivity {
                     bio.setText(value);
                 }
                 if (key.equals("gender")) {
-                    if (value.equals("male")) {
+                    if (value.equals("Male")) {
                         male.setPressed(true);
                     }
-                    if (value.equals("female")) {
+                    if (value.equals("Female")) {
                         female.setPressed(true);
                     }
-                    if (value.equals("other")) {
+                    if (value.equals("Other")) {
                         other.setPressed(true);
                     }
                 }
