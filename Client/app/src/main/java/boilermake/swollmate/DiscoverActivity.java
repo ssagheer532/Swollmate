@@ -41,7 +41,7 @@ public class DiscoverActivity extends AppCompatActivity {
         name = (TextView) findViewById(R.id.userName);
         skillLvl = (TextView) findViewById(R.id.skillText);
         bio = (TextView) findViewById(R.id.UserBio);
-        
+
         if (index < ids.size()) {
             readFromFirebase(ids.get(index));
         } else {

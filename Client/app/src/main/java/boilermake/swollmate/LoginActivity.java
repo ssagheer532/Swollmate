@@ -34,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import static boilermake.swollmate.MainActivity.ids;
 import static boilermake.swollmate.MainActivity.mAuth;
 import static boilermake.swollmate.MainActivity.mAuthListener;
+import static boilermake.swollmate.MainActivity.me;
 
 public class LoginActivity extends AppCompatActivity implements
         View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
@@ -53,7 +54,7 @@ public class LoginActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        MainActivity.me = new User();
+        me = new User();
 
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
@@ -80,7 +81,7 @@ public class LoginActivity extends AppCompatActivity implements
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    MainActivity.me.uID = user.getUid();
+                    me.uID = user.getUid();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -144,7 +145,6 @@ public class LoginActivity extends AppCompatActivity implements
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             if (acct != null) {
-                User me = MainActivity.me;
                 me.firstName = acct.getGivenName();
                 me.lastName = acct.getFamilyName();
                 me.email = acct.getEmail();
@@ -192,12 +192,12 @@ public class LoginActivity extends AppCompatActivity implements
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference();
 
-                        MainActivity.ids.add(MainActivity.me.uID);
+                        MainActivity.ids.add(me.uID);
 
-                        myRef.child("users").child(MainActivity.me.uID).setValue(MainActivity.me);
+                        myRef.child("users").child(me.uID).setValue(me);
                         myRef.child("idsRef").setValue(MainActivity.ids);
 
-                        Intent intent = new Intent(LoginActivity.this, DiscoverActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, UserProfileActivity.class);
                         startActivity(intent);
 
                         // If sign in fails, display a message to the user. If sign in succeeds
@@ -288,7 +288,7 @@ public class LoginActivity extends AppCompatActivity implements
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
 
-        myRef.child("users").child(MainActivity.me.uID).child("messages").child(Integer.toString(counter)).setValue("OMG THIS WORKS!");
+        myRef.child("users").child(me.uID).child("messages").child(Integer.toString(counter)).setValue("OMG THIS WORKS!");
         counter++;
     }
 }
