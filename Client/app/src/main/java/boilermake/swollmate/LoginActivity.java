@@ -100,7 +100,6 @@ public class LoginActivity extends AppCompatActivity implements
         });
 */
         //test = FirebaseDatabase.getInstance().getReference().child("test");
-        idsRef = FirebaseDatabase.getInstance().getReference().child("ids");
 
         idsTextView = (TextView) findViewById(R.id.ids);
     }
@@ -246,6 +245,8 @@ public class LoginActivity extends AppCompatActivity implements
         };
         test.addValueEventListener(postListener);
         */
+
+        idsRef = FirebaseDatabase.getInstance().getReference().child("ids");
 
         ChildEventListener childListener = new ChildEventListener() {
             @Override

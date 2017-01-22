@@ -19,7 +19,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import static boilermake.swollmate.MainActivity.ids;
+import static boilermake.swollmate.MainActivity.me;
 
 public class DiscoverActivity extends AppCompatActivity {
 
@@ -28,6 +31,7 @@ public class DiscoverActivity extends AppCompatActivity {
     Button yes, no;
     TextView goals, skillLvl, bio, name, noUsers;
     private DatabaseReference usersDatabase;
+    private DatabaseReference allUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +62,15 @@ public class DiscoverActivity extends AppCompatActivity {
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (index < ids.size())
+                if (index < ids.size()) {
+                    me.like.add(ids.get(index));
+                    if (me.pending.contains(ids.get(index))) {
+                        me.pending.remove(ids.get(index));
+                        me.like.remove(ids.get(index));
+                        me.matched.add(ids.get(index));
+                    }
                     readFromFirebase(ids.get(index));
-                else
+                } else
                     no_users();
             }
         });
@@ -68,9 +78,14 @@ public class DiscoverActivity extends AppCompatActivity {
         no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (index < ids.size())
+                if (index < ids.size()) {
+                    me.dislike.add(ids.get(index));
+                    if (me.pending.contains(ids.get(index))) {
+                        int temp = me.pending.indexOf(ids.get(index));
+                        me.pending.remove(temp);
+                    }
                     readFromFirebase(ids.get(index));
-                else
+                } else
                     no_users();
             }
         });
@@ -164,5 +179,140 @@ public class DiscoverActivity extends AppCompatActivity {
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void writeToFirebase(String child, String value, String uID) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+
+        myRef.child("users").child(uID).child(child).setValue(value);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        //TODO For chat
+        /*
+        ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get Post object and use the values to update the UI
+                Log.w(TAG, "Successful Read" + dataSnapshot.getValue());
+                mStatusTextView.setText((String) dataSnapshot.getValue());
+                // ...
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Getting Post failed, log a message
+                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
+            }
+        };
+        test.addValueEventListener(postListener);
+        */
+
+        /*
+        final int[] i = new int[1];
+        i[0] = 0;
+        for ( ; i[0] < MainActivity.ids.size(); i[0]++) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    allUsers = FirebaseDatabase.getInstance().getReference().child("users").child(MainActivity.ids.get(i[0]));
+                    final User user = new User();
+                    user.like = new ArrayList<>();
+                    user.dislike = new ArrayList<>();
+                    user.pending = new ArrayList<>();
+                    user.matched = new ArrayList<>();
+                    ChildEventListener childListener = new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            Log.d("DiscoverActivity", "onChildAdded: " + dataSnapshot);
+                            String key = dataSnapshot.getKey();
+                            String value = String.valueOf(dataSnapshot.getValue());
+
+                            if (key.equals("firstName")) {
+                                user.firstName = value;
+                            }
+
+                            else if (key.equals("lastName")) {
+                                user.lastName = value;
+                            }
+
+                            else if (key.equals("picURL")) {
+                                user.picURL = value;
+                            }
+
+                            else if (key.equals("age")) {
+                                user.age = Integer.parseInt(value);
+                            }
+
+                            else if (key.equals("bio")) {
+                                user.bio = value;
+                            }
+
+                            else if (key.equals("gender")) {
+                                user.gender = value;
+                            }
+
+                            else if (key.equals("skill")) {
+                                user.skill = value;
+                            }
+
+                            else if (key.equals("goals")) {
+                                user.goals = value;
+                            }
+
+                            else if (key.equals("like")) {
+                                user.like.add(value);
+                            }
+
+                            else if (key.equals("dislike")) {
+                                user.dislike.add(value);
+                            }
+
+                            else if (key.equals("pending")) {
+                                user.pending.add(value);
+                            }
+
+                            else if (key.equals("matched")) {
+                                user.matched.add(value);
+                            }
+
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    };
+                    allUsers.addChildEventListener(childListener);
+                    MainActivity.users.add(user);
+                }
+            });
+
+            android.os.SystemClock.sleep(1000);
+        }
+        ArrayList <User> temp = MainActivity.users;
+        int a = 0;
+        a++;
+        */
     }
 }

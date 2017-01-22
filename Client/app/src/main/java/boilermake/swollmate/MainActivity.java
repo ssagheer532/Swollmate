@@ -36,9 +36,10 @@ class User {
     public String lastName;
     public String picURL;
     public int age;
-    public String goal[];
+    public String goals;
     public String gender;
     public String bio;
+    public String skill;
     public ArrayList <String> like;
     public ArrayList <String> dislike;
     public ArrayList <String> pending;
