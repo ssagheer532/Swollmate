@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import static boilermake.swollmate.MainActivity.ids;
 
 public class DiscoverActivity extends AppCompatActivity {
+
     int index = 0;
     //DataSnapshot dataSnapshot;
     Button yes, no;
@@ -24,6 +25,8 @@ public class DiscoverActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTitle("Find workoutbuddies!");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
 
@@ -38,10 +41,7 @@ public class DiscoverActivity extends AppCompatActivity {
         name = (TextView) findViewById(R.id.userName);
         skillLvl = (TextView) findViewById(R.id.skillText);
         bio = (TextView) findViewById(R.id.UserBio);
-
-        //if (ids.get(index).equals(me.uID))
-        //  index++;
-//            Log.d("array size", Integer.toString(ids.size()));
+        
         if (index < ids.size()) {
             readFromFirebase(ids.get(index));
         } else {
@@ -56,8 +56,7 @@ public class DiscoverActivity extends AppCompatActivity {
                     readFromFirebase(ids.get(index));
                 else
                     no_users();
-                /// index++;
-            }//add checks here and under
+            }
         });
 
         no.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +66,6 @@ public class DiscoverActivity extends AppCompatActivity {
                     readFromFirebase(ids.get(index));
                 else
                     no_users();
-                //  index++;
             }
         });
     }
