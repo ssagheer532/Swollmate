@@ -1,10 +1,12 @@
 package boilermake.swollmate;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -139,10 +142,13 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 String key = (String) dataSnapshot.getKey();
-                String value = (String) dataSnapshot.getValue().toString() + " ";
+                String value = (String) dataSnapshot.getValue().toString();
 
                 if (key.equals("firstName") || key.equals("lastName")) {
-                    name.setText(name.getText() + value);
+                    name.setText(name.getText() + " " + value);
+                }
+                if (key.equals("picURL")) {
+                    Picasso.with(UserProfileActivity.this).load(value).into((ImageView)findViewById(R.id.my_pic));
                 }
             }
 
