@@ -40,6 +40,7 @@ public class UserProfileActivity extends AppCompatActivity {
         int selectedId = radioSexGroup.getCheckedRadioButtonId();
         radioSexButton = (RadioButton) findViewById(selectedId);
 
-
+        setTitle("Make your profile!");
+       // getActionBar().setIcon(R.drawable.my_icon);
     }
 }
