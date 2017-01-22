@@ -195,7 +195,8 @@ public class LoginActivity extends AppCompatActivity implements
 
                         myRef.child("users").child(MainActivity.me.uID).setValue(MainActivity.me);
                         myRef.child("ids").setValue(MainActivity.ids);
-
+                       // Intent intent = new Intent(LoginActivity.this, DiscoverActivity.class);
+                        //startActivity(intent);
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
