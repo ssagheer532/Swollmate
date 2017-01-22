@@ -25,7 +25,7 @@ public class DiscoverActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTitle("Find workoutbuddies!");
+        setTitle("Find workout buddies!");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);

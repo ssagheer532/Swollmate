@@ -3,8 +3,10 @@ package boilermake.swollmate;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -23,22 +25,31 @@ public class UserProfileActivity extends AppCompatActivity {
     boolean gainMuscle, looseWeight, sports, leisure;
     boolean beginner, intermediate, advance;
     String userGender;
-
+    Button buttonNext;
     CheckBox gainMuscleGoal, leisureGoal, looseWeightGoal, sportsGoal;
     CheckBox beginnerLevel, expertLevel, intermediateLevel;
     TextView name;
     private RadioGroup radioGroup;
     private RadioButton male, female, other;
     private DatabaseReference usersDatabase;
+//    private Toolbar toolbar;                              // Declaring the Toolbar Object
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
+
+    //    toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+      //  setSupportActionBar(toolbar);
+
+
+
         name = (TextView) findViewById(R.id.Name_Of_Person);
         setTitle("Profile");
-
         readFromFirebase();
+       // buttonNext = (Button) findViewById(R.id.buttonNext);
+        //buttonNext.setBackgroundResource(R.drawable.arrow);
+
         gainMuscleGoal = (CheckBox) findViewById(R.id.Gain_Muscle);
         leisureGoal = (CheckBox) findViewById(R.id.Leisure);
         looseWeightGoal = (CheckBox) findViewById(R.id.Loose_Weight);
@@ -175,6 +186,8 @@ public class UserProfileActivity extends AppCompatActivity {
         usersDatabase.addChildEventListener(childListener);
 
     }
+
+
 
 
 }

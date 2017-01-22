@@ -10,38 +10,25 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="boilermake.swollmate.LoginActivity">
 
+    <TextView
+        android:text="Swollmate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="71dp"
+        android:id="@+id/ids"
+        android:typeface="sans"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textSize="45sp"
+        android:textStyle="normal|bold" />
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/sign_in_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="55dp"
-        android:id="@+id/login_status" />
-
-    <Button
-        android:text="Send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="23dp"
-        android:id="@+id/send_message"
-        android:visibility="gone"/>
-
-    <TextView
-        android:text="None"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/send_message"
-        android:layout_alignStart="@+id/login_status"
-        android:layout_marginTop="23dp"
-        android:id="@+id/ids" />
+        android:layout_below="@+id/ids"
+        android:layout_alignStart="@+id/ids"
+        android:layout_marginTop="104dp"
+        android:layout_alignEnd="@+id/ids" />
 </RelativeLayout>

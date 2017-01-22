@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
     //private DatabaseReference test;
     private DatabaseReference idsRef;
-    private TextView mStatusTextView;
+    //private TextView mStatusTextView;
     private TextView idsTextView;
     private Button send;
 
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity implements
                 .build();
 
         findViewById(R.id.sign_in_button).setOnClickListener(this);
-        mStatusTextView = (TextView) findViewById(R.id.login_status);
+        //mStatusTextView = (TextView) findViewById(R.id.login_status);
         mAuth = FirebaseAuth.getInstance();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -90,14 +90,14 @@ public class LoginActivity extends AppCompatActivity implements
             }
         };
 
-        send = (Button) findViewById(R.id.send_message);
+        /*send = (Button) findViewById(R.id.send_message);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendMessage();
             }
         });
-
+*/
         //test = FirebaseDatabase.getInstance().getReference().child("test");
         idsRef = FirebaseDatabase.getInstance().getReference().child("ids");
 
@@ -150,13 +150,13 @@ public class LoginActivity extends AppCompatActivity implements
                 me.email = acct.getEmail();
                 me.picURL = String.valueOf(acct.getPhotoUrl());
 
-                mStatusTextView.setText(acct.getDisplayName());
+               // mStatusTextView.setText(acct.getDisplayName());
                 firebaseAuthWithGoogle(acct);
             }
             updateUI(true);
         } else {
             // Signed out, show unauthenticated UI.
-            mStatusTextView.setText("Signed out");
+           // mStatusTextView.setText("Signed out");
             updateUI(false);
         }
     }
@@ -164,7 +164,8 @@ public class LoginActivity extends AppCompatActivity implements
     private void updateUI(boolean signedIn) {
         if (signedIn) {
             findViewById(R.id.sign_in_button).setVisibility(View.GONE);
-            send.setVisibility(View.VISIBLE);
+          //  send.setVisibility(View.VISIBLE);
+            idsTextView.setText("Welcome " + MainActivity.me.firstName);
             //findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
         } else {
             //mStatusTextView.setText(R.string.signed_out);
@@ -176,7 +177,7 @@ public class LoginActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        mStatusTextView.setText("Signed failed");
+       // mStatusTextView.setText("Signed failed");
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
