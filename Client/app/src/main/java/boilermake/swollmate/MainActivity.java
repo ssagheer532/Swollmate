@@ -28,10 +28,10 @@ public class MainActivity extends AppCompatActivity {
 }
 
 class User {
-    String uID;
-    String email;
-    String firstName;
-    String lastName;
+    public String uID;
+    public String email;
+    public String firstName;
+    public String lastName;
     int age;
     String goal[];
     String gender;

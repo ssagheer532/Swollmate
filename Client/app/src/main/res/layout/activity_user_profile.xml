@@ -197,4 +197,12 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
+    <Button
+        android:text="Next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/Name_Of_Person"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/buttonNext" />
+
 </RelativeLayout>
