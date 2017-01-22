@@ -1,11 +1,12 @@
 package boilermake.swollmate;
 
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -18,15 +19,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import static boilermake.swollmate.MainActivity.me;
+
 public class UserProfileActivity extends AppCompatActivity {
 
     boolean gainMuscle, looseWeight, sports, leisure;
-    boolean beginner, intermediate, advance;
+    boolean beginner, intermediate, expert, advance;
     String userGender;
 
     CheckBox gainMuscleGoal, leisureGoal, looseWeightGoal, sportsGoal;
     CheckBox beginnerLevel, expertLevel, intermediateLevel;
     TextView name;
+    EditText age, bio;
+    Button next;
     private RadioGroup radioGroup;
     private RadioButton male, female, other;
     private DatabaseReference usersDatabase;
@@ -38,7 +43,6 @@ public class UserProfileActivity extends AppCompatActivity {
         name = (TextView) findViewById(R.id.Name_Of_Person);
         setTitle("Profile");
 
-        readFromFirebase();
         gainMuscleGoal = (CheckBox) findViewById(R.id.Gain_Muscle);
         leisureGoal = (CheckBox) findViewById(R.id.Leisure);
         looseWeightGoal = (CheckBox) findViewById(R.id.Loose_Weight);
@@ -53,72 +57,105 @@ public class UserProfileActivity extends AppCompatActivity {
         female = (RadioButton) findViewById(R.id.female);
         other = (RadioButton) findViewById(R.id.other);
 
-        gainMuscleGoal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (gainMuscleGoal.isChecked()){
-                    gainMuscle = true;
-                }
-            }
-        });
+        readFromFirebase();
 
-        looseWeightGoal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (looseWeightGoal.isChecked()){
-                    looseWeight = true;
-                }
-            }
-        });
+        age = (EditText) findViewById(R.id.Age_Int_Only);
+        bio = (EditText) findViewById(R.id.BioForPerson);
 
-        sportsGoal.setOnClickListener(new View.OnClickListener() {
+        next = (Button) findViewById(R.id.buttonNext);
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (sportsGoal.isChecked()){
-                    sports = true;
+                writeToFirebase("age", age.getText().toString());
+                writeToFirebase("bio", bio.getText().toString());
+                String goals = "";
+                if (gainMuscleGoal.isChecked()) {
+                    if (goals.isEmpty()) {
+                        goals = "Gain Muscle";
+                    } else {
+                        goals = goals + ", Gain Muscle";
+                    }
                 }
-            }
-        });
-        leisureGoal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (leisureGoal.isChecked()){
-                    leisure = true;
+                if (leisureGoal.isChecked()) {
+                    if (goals.isEmpty()) {
+                        goals = "Leisure";
+                    } else {
+                        goals = goals + ", Leisure";
+                    }
                 }
+                if (looseWeightGoal.isChecked()) {
+                    if (goals.isEmpty()) {
+                        goals = "Loose Weight";
+                    } else {
+                        goals = goals + ", Loose Weight";
+                    }
+                }
+                if (sportsGoal.isChecked()) {
+                    if (goals.isEmpty()) {
+                        goals = "Sports";
+                    } else {
+                        goals = goals + ", Sports";
+                    }
+                }
+                writeToFirebase("goals", goals);
+
+                Intent intent = new Intent(UserProfileActivity.this, DiscoverActivity.class);
+                startActivity(intent);
             }
         });
 
         beginnerLevel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (beginnerLevel.isChecked()){
+                if (beginnerLevel.isChecked()) {
                     beginner = true;
+                    writeToFirebase("skill", "Beginner");
                 }
+                intermediateLevel.setChecked(false);
+                expertLevel.setChecked(false);
             }
         });
+
         intermediateLevel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (intermediateLevel.isChecked()){
+                if (intermediateLevel.isChecked()) {
                     intermediate = true;
+                    writeToFirebase("skill", "Intermediate");
                 }
+                beginnerLevel.setChecked(false);
+                expertLevel.setChecked(false);
             }
         });
+
+        expertLevel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (expertLevel.isChecked()) {
+                    expert = true;
+                    writeToFirebase("skill", "Expert");
+                }
+                beginnerLevel.setChecked(false);
+                intermediateLevel.setChecked(false);
+            }
+        });
+
         male.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (male.isPressed()){
+                if (male.isPressed()) {
                     userGender = "male";
+                    writeToFirebase("gender", "Male");
                 }
-
             }
         });
 
         female.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (female.isPressed()){
+                if (female.isPressed()) {
                     userGender = "female";
+                    writeToFirebase("gender", "Female");
                 }
             }
         });
@@ -126,11 +163,11 @@ public class UserProfileActivity extends AppCompatActivity {
         other.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (other.isPressed()){
+                if (other.isPressed()) {
                     userGender = "other";
+                    writeToFirebase("gender", "Other");
                 }
             }
-
         });
     }
 
@@ -144,11 +181,16 @@ public class UserProfileActivity extends AppCompatActivity {
                 String key = (String) dataSnapshot.getKey();
                 String value = (String) dataSnapshot.getValue().toString();
 
-                if (key.equals("firstName") || key.equals("lastName")) {
+                if (key.equals("firstName")) {
+                    name.setText(value);
+                }
+
+                if (key.equals("lastName")) {
                     name.setText(name.getText() + " " + value);
                 }
+
                 if (key.equals("picURL")) {
-                    Picasso.with(UserProfileActivity.this).load(value).into((ImageView)findViewById(R.id.my_pic));
+                    Picasso.with(UserProfileActivity.this).load(value).into((ImageView) findViewById(R.id.my_pic));
                 }
             }
 
@@ -173,8 +215,13 @@ public class UserProfileActivity extends AppCompatActivity {
             }
         };
         usersDatabase.addChildEventListener(childListener);
-
     }
 
+    public void writeToFirebase(String child, String value) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+
+        myRef.child("users").child(me.uID).child(child).setValue(value);
+    }
 
 }

@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -12,6 +13,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import static boilermake.swollmate.MainActivity.ids;
 
@@ -76,7 +78,7 @@ public class DiscoverActivity extends AppCompatActivity {
         skillLvl.setVisibility(View.GONE);
         bio.setVisibility(View.GONE);
         findViewById(R.id.userSkill).setVisibility(View.GONE);
-        findViewById(R.id.imageView).setVisibility(View.GONE);
+        findViewById(R.id.userPic).setVisibility(View.GONE);
         findViewById(R.id.userGoals).setVisibility(View.GONE);
         findViewById(R.id.noUsers).setVisibility(View.VISIBLE);
     }
@@ -92,21 +94,23 @@ public class DiscoverActivity extends AppCompatActivity {
                 String value = (String) dataSnapshot.getValue().toString();
 
                 if (key.equals("firstName")) {
-
                     name.setText(value);
                 }
+                if (key.equals("lastName")) {
+                    name.setText(name.getText() + " " + value);
+                }
                 if (key.equals("goals")) {
-
                     goals.setText(value);
                 }
-                if (key.equals("skillLvl")) {
+                if (key.equals("skill")) {
                     skillLvl.setText(value);
                 }
                 if (key.equals("bio")) {
-
                     bio.setText(value);
                 }
-
+                if (key.equals("picURL")) {
+                    Picasso.with(DiscoverActivity.this).load(value).into((ImageView) findViewById(R.id.userPic));
+                }
 
                 Log.d("Key: ", key);
                 Log.d("Value: ", value);
