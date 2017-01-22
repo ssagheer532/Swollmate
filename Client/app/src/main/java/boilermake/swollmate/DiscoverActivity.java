@@ -148,6 +148,7 @@ public class DiscoverActivity extends AppCompatActivity {
 
     public void readFromFirebase(String uID) {
         if (uID.equals(me.uID)) {
+            index++;
             return;
         }
         usersDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(uID);
