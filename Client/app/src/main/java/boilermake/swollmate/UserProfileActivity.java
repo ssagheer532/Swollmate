@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
+import static boilermake.swollmate.MainActivity.mAuth;
 import static boilermake.swollmate.MainActivity.me;
 
 public class UserProfileActivity extends AppCompatActivity {
@@ -209,13 +210,13 @@ public class UserProfileActivity extends AppCompatActivity {
                 }
                 if (key.equals("gender")) {
                     if (value.equals("Male")) {
-                        male.setPressed(true);
+                        radioGroup.check(R.id.male);
                     }
                     if (value.equals("Female")) {
-                        female.setPressed(true);
+                        radioGroup.check(R.id.female);
                     }
                     if (value.equals("Other")) {
-                        other.setPressed(true);
+                        radioGroup.check(R.id.other);
                     }
                 }
 
