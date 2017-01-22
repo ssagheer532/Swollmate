@@ -34,7 +34,7 @@ class User {
     public String email;
     public String firstName;
     public String lastName;
-    public Uri pic;
+    public String picURL;
     public int age;
     public String goal[];
     public String gender;

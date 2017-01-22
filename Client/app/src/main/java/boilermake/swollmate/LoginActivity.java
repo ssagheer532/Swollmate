@@ -148,7 +148,7 @@ public class LoginActivity extends AppCompatActivity implements
                 me.firstName = acct.getGivenName();
                 me.lastName = acct.getFamilyName();
                 me.email = acct.getEmail();
-                me.pic = acct.getPhotoUrl();
+                me.picURL = String.valueOf(acct.getPhotoUrl());
 
                 mStatusTextView.setText(acct.getDisplayName());
                 firebaseAuthWithGoogle(acct);
