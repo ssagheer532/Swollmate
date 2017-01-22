@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<User> users = new ArrayList<>();
     public static ArrayList<String> ids = new ArrayList<>();
     public static User me;
+    public static ArrayList<Button> buttons = new ArrayList<>();
 
     public static ArrayList<String> pending = new ArrayList<>();
     public static ArrayList<String> matched = new ArrayList<>();
@@ -26,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        Intent intent = new Intent(MainActivity.this, ChatListActivity.class);
         startActivity(intent);
     }
 }

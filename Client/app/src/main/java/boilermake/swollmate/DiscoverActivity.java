@@ -151,7 +151,7 @@ public class DiscoverActivity extends AppCompatActivity {
             index++;
             if (index < ids.size()) {
                 readFromFirebase(ids.get(index));
-            } {
+            }else {
                 no_users();
             }
             return;
