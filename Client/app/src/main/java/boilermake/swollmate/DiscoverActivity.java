@@ -74,23 +74,23 @@ public class DiscoverActivity extends AppCompatActivity {
                     String string = me.uID + " " + ids.get(index);
                     String opp = ids.get(index) + " " + me.uID;
 
-                    if (MainActivity.pending.contains(opp) || MainActivity.pending.contains(string)) {
+                    if (MainActivity.pending.contains(opp)) {
                         MainActivity.matched.add(string);
-                        Set<String> mtemp = new HashSet<String>();
+                        Set<String> mtemp = new HashSet<>();
                         mtemp.addAll(MainActivity.matched);
                         MainActivity.matched.clear();
                         MainActivity.matched.addAll(mtemp);
                         writeToFirebase("matched", MainActivity.matched);
 
                         MainActivity.pending.remove(opp);
-                        Set<String> ptemp = new HashSet<String>();
+                        Set<String> ptemp = new HashSet<>();
                         ptemp.addAll(MainActivity.pending);
                         MainActivity.pending.clear();
                         MainActivity.pending.addAll(ptemp);
                         writeToFirebase("pending", MainActivity.pending);
                     } else {
                         MainActivity.pending.add(string);
-                        Set<String> ptemp = new HashSet<String>();
+                        Set<String> ptemp = new HashSet<>();
                         ptemp.addAll(MainActivity.pending);
                         MainActivity.pending.clear();
                         MainActivity.pending.addAll(ptemp);
@@ -149,6 +149,11 @@ public class DiscoverActivity extends AppCompatActivity {
     public void readFromFirebase(String uID) {
         if (uID.equals(me.uID)) {
             index++;
+            if (index < ids.size()) {
+                readFromFirebase(ids.get(index));
+            } {
+                no_users();
+            }
             return;
         }
         usersDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(uID);
