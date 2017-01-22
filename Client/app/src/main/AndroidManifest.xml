@@ -22,10 +22,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".DiscoverActivity" />
-        <activity android:name=".ChatActivity" />
         <activity
             android:name=".ChatListActivity"
             android:label="@string/title_activity_chat_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChatActivity"
+            android:label="@string/title_activity_chat"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
